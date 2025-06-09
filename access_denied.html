@@ -1,0 +1,16 @@
+
+{% extends "base.html" %}
+
+{% block title %}Access Denied - سستم الاشتراكات{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="alert alert-danger text-center">
+            <h3>وصول مرفوض / Access Denied</h3>
+            <p>عذراً، الآي بي الخاص بك ({{ ip }}) غير مسموح بالوصول لهذا النظام.</p>
+            <p>Sorry, your IP address ({{ ip }}) is not allowed to access this system.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

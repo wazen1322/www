@@ -1,0 +1,13 @@
+Assistant checkpoint: تعديل اسم المطور وتحديث الألوان للبنفسجي والأزرق
+
+Assistant generated file changes:
+- templates/base.html: تعديل اسم المطور وتغيير الألوان إلى البنفسجي والأزرق, تحديث الألوان الرئيسية للصفحة
+
+---
+
+User prompt:
+
+في مشكله ف اسم المطور عدله اسم المطور وازن الحربي وخلي لون الصفحه بنفسجي و ازرق الالوان الرئسيه
+
+Replit-Commit-Author: Assistant
+Replit-Commit-Session-Id: 3bde282e-289e-40c2-9d51-5f86bc5c789e

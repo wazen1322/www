@@ -1,0 +1,135 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="mb-4">إدارة الاشتراكات</h2>
+        
+        <!-- نموذج إضافة اشتراك جديد -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5>إضافة اشتراك جديد</h5>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="/add_subscription">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label for="file_number" class="form-label">رقم الملف</label>
+                                <select class="form-select" id="file_number" name="file_number" required>
+                                    {% for i in range(1, 101) %}
+                                    <option value="{{ i }}">{{ i }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label for="customer_name" class="form-label">اسم العميل</label>
+                                <input type="text" class="form-control" id="customer_name" name="customer_name" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label for="email" class="form-label">بريد الحساب</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="mb-3">
+                                <label for="password" class="form-label">كلمة المرور</label>
+                                <input type="password" class="form-control" id="password" name="password" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="subscription_type" class="form-label">نوع الاشتراك</label>
+                                <select class="form-select" id="subscription_type" name="subscription_type" required>
+                                    <option value="شاهد">شاهد</option>
+                                    <option value="نتفلكس">نتفلكس</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="start_date" class="form-label">تاريخ البداية</label>
+                                <input type="date" class="form-control" id="start_date" name="start_date" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-3">
+                                <label for="end_date" class="form-label">تاريخ الانتهاء</label>
+                                <input type="date" class="form-control" id="end_date" name="end_date" required>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success">إضافة اشتراك</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- جدول الاشتراكات -->
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5>قائمة الاشتراكات</h5>
+                <div>
+                    <a href="/delete_all" class="btn btn-danger" onclick="return confirm('هل أنت متأكد من حذف جميع الاشتراكات؟')">حذف الكل</a>
+                </div>
+            </div>
+            <div class="card-body">
+                {% if subscriptions %}
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>رقم الملف</th>
+                                <th>اسم العميل</th>
+                                <th>بريد الحساب</th>
+                                <th>كلمة المرور</th>
+                                <th>نوع الاشتراك</th>
+                                <th>تاريخ البداية</th>
+                                <th>تاريخ الانتهاء</th>
+                                <th>الأيام المتبقية</th>
+                                <th>العمليات</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for subscription in subscriptions %}
+                            <tr>
+                                <td>{{ subscription["رقم الملف"] }}</td>
+                                <td>{{ subscription["اسم العميل"] }}</td>
+                                <td>{{ subscription["بريد الحساب"] }}</td>
+                                <td>{{ subscription["كلمة المرور"] }}</td>
+                                <td>{{ subscription["نوع الاشتراك"] }}</td>
+                                <td>{{ subscription["تاريخ البداية"] }}</td>
+                                <td>{{ subscription["تاريخ الانتهاء"] }}</td>
+                                <td>
+                                    {% if subscription["الأيام المتبقية"] < 0 %}
+                                        <span class="badge bg-danger">منتهي</span>
+                                    {% elif subscription["الأيام المتبقية"] <= 7 %}
+                                        <span class="badge bg-warning">{{ subscription["الأيام المتبقية"] }} يوم</span>
+                                    {% else %}
+                                        <span class="badge bg-success">{{ subscription["الأيام المتبقية"] }} يوم</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="/delete_subscription/{{ loop.index0 }}" class="btn btn-sm btn-danger" onclick="return confirm('هل أنت متأكد من حذف هذا الاشتراك؟')">حذف</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-4">
+                    <p class="text-muted">لا توجد اشتراكات بعد. أضف اشتراكك الأول!</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
